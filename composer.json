@@ -1,0 +1,40 @@
+{
+  "name": "zwei/context",
+  "description": "The php go context package.",
+  "license": "MIT",
+  "homepage": "https://github.com/qq1060656096/php-go-context",
+  "support": {
+    "issues": "https://github.com/qq1060656096/php-go-context/issues",
+    "source": "https://github.com/qq1060656096/php-go-context"
+  },
+  "authors": [
+    {
+      "name": "Zhao Wei Jie",
+      "email": "1060656096@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "zwei/composer-vendor-directory": "~1",
+    "phpunit/phpunit": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zwei\\Context\\": "./Context"
+    },
+    "files": [
+      "./Context/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Zwei\\Context\\Tests\\": "Tests/",
+      "Zwei\\Context\\Examples\\": "Examples/"
+    }
+  },
+  "suggest": {
+    "php": "Required to php >=(5.4)."
+  }
+}
