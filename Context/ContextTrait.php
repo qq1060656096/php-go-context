@@ -32,4 +32,12 @@ trait ContextTrait
     {
         return null;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function Value($key)
+    {
+        return null;
+    }
 }
