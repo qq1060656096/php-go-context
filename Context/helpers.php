@@ -2,6 +2,7 @@
 namespace Zwei\Context;
 
 use Zwei\Context\Exception\CancelException;
+use Zwei\Context\Exception\DeadlineExceededException;
 
 function Background()
 {
@@ -37,6 +38,34 @@ function newEmptyCtx($name)
     return $instances[$name];
 }
 
+/**
+ * @param Context $parent
+ * @param Time $d
+ * @return array [Context $ctx,CancelFunc $cancelFunc]
+ */
+function WithDeadline(Context $parent, Time $d) {
+    if (is_null($parent)) {
+        throw new \Exception("parent 参数错误");
+	}
+    /* @var Time $cur */
+    list($cur, $ok) = $parent->Deadline();
+    if ($ok && $cur.Before($d)) {
+        // The current deadline is already sooner than the new one.
+		return WithCancel($parent);
+	}
+	$c = TimerCtx::newTimerCtx($parent, $d);
+	propagateCancel($parent, $c);
+    $cancelFunc = function () use ($c) {
+        $c->Cancel(true, Canceled);
+    };
+
+	$dur = $d->Until(d);
+	if ($dur <= 0) {
+        $c->Cancel(true, DeadlineExceeded()); // deadline has already passed
+		return [$c, $cancelFunc];
+	}
+	return [$c, $cancelFunc];
+}
 
 
 /**
@@ -48,7 +77,6 @@ function WithCancel(Context $parent)
     $c = newCancelCtx($parent);
     propagateCancel($parent, $c);
     $cancelFunc = function () use($c) {
-        var_dump(__LINE__);
         $c->cancel(false, Canceled());
     };
     return [$c, $cancelFunc];
@@ -99,6 +127,14 @@ function Canceled() {
         $Canceled = new CancelException();
     }
     return $Canceled;
+}
+
+function DeadlineExceeded() {
+    static $DeadlineExceeded = null;
+    if (is_null($DeadlineExceeded)) {
+        $DeadlineExceeded = new DeadlineExceededException();
+    }
+    return $DeadlineExceeded;
 }
 
 /**

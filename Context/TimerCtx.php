@@ -36,4 +36,12 @@ class TimerCtx extends CancelCtx
             removeChild($this->cancelCtx->parent, $this);
         }
     }
+
+    public static function newTimerCtx(Context $parent, Time $d)
+    {
+        $ctx = new static();
+        $ctx->cancelCtx = self::newCancelCtx($parent);
+        $ctx->deadline = $d;
+        return $ctx;
+    }
 }

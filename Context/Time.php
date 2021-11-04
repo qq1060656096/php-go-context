@@ -8,6 +8,15 @@ class Time
      * @param Time $time
      * @return int
      */
+    public function Before(Time $time)
+    {
+        return 0;
+    }
+
+    /**
+     * @param Time $time
+     * @return int
+     */
     public function Sub(Time $time)
     {
         return 0;

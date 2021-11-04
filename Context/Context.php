@@ -7,7 +7,7 @@ namespace Zwei\Context;
  */
 interface Context {
     /**
-     * @return [$deadline timestamp, ok bool]
+     * @return [Time $deadline, ok bool]
      */
     public function Deadline();
 
