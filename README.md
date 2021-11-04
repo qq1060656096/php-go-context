@@ -3,14 +3,18 @@
 
 ### context使用闭坑指南
 ```
-1. 对应服务器请求应该创建一个 context 
-2. 不应该在结构体 、数组、map、对象中存储context，相反应该将 context 显示的传递给每个需要它的函数
-3. 它们之间的调用连必须传播上下文，使用 WithCancel() WithDeadline() WithTimeout() WithValue()
-4. 当一个 context 取消时，从它派生出的所有 context 也会被取消。
-5. 同一个Context可以传递给在不同的goroutine中运行的函数;上下文对于多个goroutine同时使用是安全的。
-6. 不要传递 nil Context，即是函数允许。如果你不知道使用哪个 context，请使用 Todo()
-7. 对于所有堵塞或者长时的操作都是应该可以取消的。
-8. 使用 WithValue() 会使用流程模糊，但是有时我们不得不用，需要我们谨慎使用。
+1. 将一个Context参数作为第一个参数传递给传入和传出请求之间调用路径上的每个函数
+2. 对应服务器请求应该创建一个 context 
+3. 不应该在结构体 、数组、map、对象中存储context，相反应该将 context 显示的传递给每个需要它的函数
+4. 它们之间的调用连必须传播上下文，使用 WithCancel() WithDeadline() WithTimeout() WithValue()
+5. 当一个 context 取消时，从它派生出的所有 context 也会被取消。
+6. 同一个Context可以传递给在不同的goroutine中运行的函数;上下文对于多个goroutine同时使用是安全的。
+7. 不要传递 nil Context，即是函数允许。如果你不知道使用哪个 context，请使用 Todo()
+8. 对于所有堵塞或者长时的操作都是应该可以取消的。
+9. 使用 WithValue() 会使用流程模糊，但是有时我们不得不用，需要我们谨慎使用。
+10. 开发业务时，老代码函数不必遵守，Context参数作为老函数的第一个参数。
+11. 开发业务时，如果有新旧代码，请保持新代码必须传 context
+12. 开发业务时，如果有新旧代码，请保持老代码没有传递 context 做兼容，如设置默认值
 ```
 
 ###  Background()

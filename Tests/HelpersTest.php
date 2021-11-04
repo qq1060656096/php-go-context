@@ -30,4 +30,9 @@ class HelpersTest extends TestCase
         $this->assertEquals("valueV1", $ctx1->Value("key1"));
         $this->assertEquals("valueV2", $ctx2->Value("key1"));
     }
+
+    public function testBackgroundValue() {
+        $ctx1 = Background();
+        $this->assertEquals(null, $ctx1->Value("key1"));
+    }
 }
