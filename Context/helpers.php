@@ -40,6 +40,15 @@ function newEmptyCtx($name)
 
 /**
  * @param Context $parent
+ * @param float $timeout 微妙
+ * @return array [Context $ctx,CancelFunc $cancelFunc]
+ * @throws \Exception
+ */
+function WithTimeout(Context $parent, $timeout) {
+    return WithDeadline($parent, Time::Now()->Add($timeout));
+}
+/**
+ * @param Context $parent
  * @param Time $d
  * @return array [Context $ctx,CancelFunc $cancelFunc]
  */
@@ -49,7 +58,7 @@ function WithDeadline(Context $parent, Time $d) {
 	}
     /* @var Time $cur */
     list($cur, $ok) = $parent->Deadline();
-    if ($ok && $cur.Before($d)) {
+    if ($ok && $cur->Before($d)) {
         // The current deadline is already sooner than the new one.
 		return WithCancel($parent);
 	}
@@ -59,7 +68,7 @@ function WithDeadline(Context $parent, Time $d) {
         $c->Cancel(true, Canceled);
     };
 
-	$dur = $d->Until(d);
+	$dur = $d->Until($d);
 	if ($dur <= 0) {
         $c->Cancel(true, DeadlineExceeded()); // deadline has already passed
 		return [$c, $cancelFunc];
