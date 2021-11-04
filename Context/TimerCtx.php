@@ -24,6 +24,11 @@ class TimerCtx extends CancelCtx
 
     public function Deadline()
     {
+        $dur = $this->deadline->Until($this->deadline);
+        if ( $dur <= 0) {
+            $this->err = DeadlineExceeded();
+            $this->done = true;
+        }
         return [$this->deadline, true];
     }
 

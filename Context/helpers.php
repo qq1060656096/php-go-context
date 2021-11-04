@@ -45,7 +45,9 @@ function newEmptyCtx($name)
  * @throws \Exception
  */
 function WithTimeout(Context $parent, $timeout) {
-    return WithDeadline($parent, Time::Now()->Add($timeout));
+    $d = Time::Now();
+    $d->Add($timeout);
+    return WithDeadline($parent, $d);
 }
 /**
  * @param Context $parent

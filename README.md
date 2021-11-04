@@ -71,5 +71,6 @@ var_dump($ctx1->Err() === Canceled(), Errors::IsCanceled($ctx1->Err()));//结果
 
 ```
 
-### WithDeadline()还未写完
-> 
+### WithTimeout()
+> 当截止日期到期时或者cancel函数被调用时，Context->Done返回true。
+> TimerCtx 释放与此上下有关的资源，因此代码应该在上下文中运行操作完成或者异常后调用。

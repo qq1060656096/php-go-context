@@ -32,6 +32,7 @@ class Time
 
     public function Add($d) {
         $this->usec += $d;
+        return $this->usec;
     }
     /**
      * 持续微妙数
