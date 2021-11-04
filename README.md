@@ -1,6 +1,7 @@
 # php-go-context
 > 参考 golang context https://pkg.go.dev/context
 
+### context使用闭坑指南
 ```
 1. 对应服务器请求应该创建一个 context 
 2. 不应该在结构体 、数组、map、对象中存储context，相反应该将 context 显示的传递给每个需要它的函数
