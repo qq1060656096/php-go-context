@@ -44,7 +44,7 @@ var_dump($ctx2->Value("key1"));//输出：valueV2
 > CancelCtx释放与此上下有关的资源，因此代码应该在上下文中运行操作完成或者异常后调用。
 ```php
 <?php
-# 示例文件路径 Examples/WithCancel.php
+# 示例文件路径：Examples/WithCancel.php
 include_once __DIR__.'/../vendor/autoload.php';
 
 use function Zwei\Context\WithCancel;
@@ -52,7 +52,7 @@ use function Zwei\Context\Background;
 use function Zwei\Context\Canceled;
 use Zwei\Context\Context;
 use Zwei\Context\CancelCtx;
-
+use Zwei\Context\Errors;
 $ctx = Background();
 /* @var CancelCtx $ctx1*/
 list($ctx1, $cancelFunc) = WithCancel($ctx);
@@ -67,8 +67,8 @@ try {
     echo "异常取消\n";
     throw $e;
 }
+var_dump($ctx1->Err() === Canceled(), Errors::IsCanceled($ctx1->Err()));//结果为： true, true
 
-var_dump($ctx1->Err() === Canceled());
 ```
 
 ### WithDeadline()还未写完

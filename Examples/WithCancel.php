@@ -1,4 +1,5 @@
 <?php
+# 示例文件路径：Examples/WithCancel.php
 include_once __DIR__.'/../vendor/autoload.php';
 
 use function Zwei\Context\WithCancel;
@@ -6,7 +7,7 @@ use function Zwei\Context\Background;
 use function Zwei\Context\Canceled;
 use Zwei\Context\Context;
 use Zwei\Context\CancelCtx;
-
+use Zwei\Context\Errors;
 $ctx = Background();
 /* @var CancelCtx $ctx1*/
 list($ctx1, $cancelFunc) = WithCancel($ctx);
@@ -21,8 +22,7 @@ try {
     echo "异常取消\n";
     throw $e;
 }
-
-var_dump($ctx1->Err() === Canceled());
+var_dump($ctx1->Err() === Canceled(), Errors::IsCanceled($ctx1->Err()));//结果为： true, true
 
 
 function Business(Context $ctx) {
