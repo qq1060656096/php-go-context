@@ -4,6 +4,8 @@ namespace Zwei\Context;
 
 class EmptyCtx implements Context
 {
+    use toStringTrait;
+
     /**
      * @inheritDoc
      */

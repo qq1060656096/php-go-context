@@ -5,6 +5,7 @@ namespace Zwei\Context;
 class CancelCtx implements Context,Canceler
 {
     use ContextTrait;
+    use toStringTrait;
 
     protected $done = false;
 
