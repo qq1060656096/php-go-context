@@ -117,7 +117,7 @@ class CancelCtx implements Context,Canceler
      * @return static
      */
     public static function newCancelCtx(Context $parent) {
-        $ctx = new static();
+        $ctx = new self();
         $ctx->parent = $parent;
         return $ctx;
     }

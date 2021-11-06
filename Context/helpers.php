@@ -67,7 +67,7 @@ function WithDeadline(Context $parent, Time $d) {
 	$c = TimerCtx::newTimerCtx($parent, $d);
 	propagateCancel($parent, $c);
     $cancelFunc = function () use ($c) {
-        $c->Cancel(true, Canceled);
+        $c->Cancel(true, Canceled());
     };
 
 	$dur = $d->Until($d);
