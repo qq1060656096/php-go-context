@@ -98,6 +98,7 @@ function propagateCancel(Context $parent, Canceler $child) {
     // 1. 父 context 取消，就取消子 context
     $done = $parent->Done();
     if ($done) {
+        var_dump($done);
         $child->cancel(false, $parent->Err());
         return;
     }

@@ -47,13 +47,21 @@ class TimerCtx extends CancelCtx
      */
     public function Cancel($removeFromParent, \Exception $err)
     {
-        $this->err = $err;
         $this->done = true;
+        $this->err = $err;
         $this->cancelCtx->Cancel($removeFromParent, $err);
+        foreach ($this->children as $child) {
+            $child->Cancel(false, $err);
+        }
+        foreach ($this->children as $child) {
+            $child->Cancel(false, $err);
+        }
+
         if ($removeFromParent) {
             removeChild($this->cancelCtx->parent, $this);
         }
     }
+
 
     public static function newTimerCtx(Context $parent, Time $d)
     {
